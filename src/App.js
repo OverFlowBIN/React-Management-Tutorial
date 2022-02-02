@@ -1,26 +1,47 @@
 import './App.css';
 import Customer from './components/Customer';
 
-const customer = {
-  'id': 1,
-  'image': 'https://placeimg.com//64/64/any',
-  'name': '김영빈',
-  'birthday': '961212',
-  'gender': '남자',
-  'job': '학생'
-}
+const customers = [
+  {
+    'id': 1,
+    'image': 'https://placeimg.com//64/64/1',
+    'name': '김영빈',
+    'birthday': '940312',
+    'gender': '남자',
+    'job': '초등학생'
+  },
+  {
+    'id': 2,
+    'image': 'https://placeimg.com//64/64/2',
+    'name': '박윤정',
+    'birthday': '950502',
+    'gender': '여자',
+    'job': '중학생'
+  },
+  {
+    'id': 3,
+    'image': 'https://placeimg.com//64/64/3',
+    'name': '이현걸',
+    'birthday': '970607',
+    'gender': '남자',
+    'job': '고등학생'
+  },
+  {
+    'id': 4,
+    'image': 'https://placeimg.com//64/64/4',
+    'name': '지영서',
+    'birthday': '990218',
+    'gender': '여자',
+    'job': '대학생'
+  }
+]
 
 
 function App() {
   return (
-    <Customer 
-      id={customer.id}
-      image={customer.image}
-      name={customer.name}
-      birthday={customer.birthday}
-      gender={customer.gender}
-      job={customer.job}
-    />
+    <div>
+      { customers.map(el => { return <Customer key={el.id} id={el.id} image={el.image} name={el.name} birthday={el.birthday} job={el.job} /> }) }
+    </div>
   );
 }
 
