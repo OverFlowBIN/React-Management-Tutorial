@@ -6,6 +6,13 @@ import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { withStyles} from '@material-ui/core/styles';
+import { useEffect, useState } from "react";
+
+
+// 실제로 api서버에 데이터(고객정보) 접근하기
+// react클라이언트 프로그램에서 웹서비스가 동작하고 나서 서버에 접근해서 데이터 불러오기
+// -> 고객정보는 처음에 비어있다가 나중에 재구성된다.
+
 
 
 const styles = theme => ({
@@ -19,43 +26,23 @@ const styles = theme => ({
   }
 })
 
-const customers = [
-  {
-    'id': 1,
-    'image': 'https://placeimg.com//64/64/1',
-    'name': '김영빈',
-    'birthday': '940312',
-    'gender': '남자',
-    'job': '초등학생'
-  },
-  {
-    'id': 2,
-    'image': 'https://placeimg.com//64/64/2',
-    'name': '박윤정',
-    'birthday': '950502',
-    'gender': '여자',
-    'job': '중학생'
-  },
-  {
-    'id': 3,
-    'image': 'https://placeimg.com//64/64/3',
-    'name': '이현걸',
-    'birthday': '970607',
-    'gender': '남자',
-    'job': '고등학생'
-  },
-  {
-    'id': 4,
-    'image': 'https://placeimg.com//64/64/4',
-    'name': '지영서',
-    'birthday': '990218',
-    'gender': '여자',
-    'job': '대학생'
-  }
-]
 
 
 function App(props) {
+
+  const [customers, setCustomers] = useState('');
+
+
+  // 에러핸들링 추가해줘야한다!!!! -> 아직 안함..
+  useEffect(() => {
+    async function fetchAndUser() {
+      const response = await fetch('/api/customers');
+      const body = await response.json();
+      setCustomers(body);
+    }
+    fetchAndUser();    
+  })
+
   const { classes } = props;
   return (
     <Paper className={classes.root}>
@@ -71,7 +58,9 @@ function App(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-        { customers.map(el => { return <Customer key={el.id} id={el.id} image={el.image} name={el.name} birthday={el.birthday} gender={el.gender} job={el.job} /> }) }
+        { customers ? 
+        customers.map(el => { return <Customer key={el.id} id={el.id} image={el.image} name={el.name} birthday={el.birthday} gender={el.gender} job={el.job} /> }) 
+        : null }
         </TableBody>
       </Table>
     </Paper>
